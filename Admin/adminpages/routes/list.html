@@ -1,0 +1,3254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style>
+    .popup-wrapper {
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .popup {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .popup a {
+      background: salmon;
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 30px auto;
+      display: block;
+      width: 50%;
+    }
+
+    .popup a:hover {
+      background: palevioletred;
+      transition: all 0.2s;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .popup-wrapper-sale {
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 10001;
+    }
+
+    .popup-sale {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .popup-sale a {
+      background: salmon;
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 30px auto;
+      display: block;
+      width: 50%;
+    }
+
+    .popup-sale a:hover {
+      background: palevioletred;
+      transition: all 0.2s;
+    }
+
+    .popup-close-sale {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .popup-wrapper-client {
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 10001;
+    }
+
+    .popup-client {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .popup-client a {
+      background: salmon;
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 30px auto;
+      display: block;
+      width: 50%;
+    }
+
+    .popup-client a:hover {
+      background: palevioletred;
+      transition: all 0.2s;
+    }
+
+    .popup-close-client {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+  </style>
+  <style>
+    .popup-wrapper-summary {
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 10000;
+      overflow: auto;
+    }
+
+    .popup-summary {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+      max-width: 900px;
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .popup-summary a {
+      background: salmon;
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 30px auto;
+      display: block;
+      width: 50%;
+    }
+
+    .popup-summary a:hover {
+      background: palevioletred;
+      transition: all 0.2s;
+    }
+
+    .popup-close-summary {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .loader {
+      border: 16px solid #f3f3f3;
+      /* Light grey */
+      border-top: 16px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      display: none;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+
+      </ul>
+
+
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../dashboard.html" class="brand-link">
+        <img src="../../adminpages/assets/logo.png" alt="Admin Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">Comodín</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="../dashboard.html" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Inicio
+
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Ventas
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../sales/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../sales/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../sales/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Clientes
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../customers/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../customers/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../customers/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-route"></i>
+                <p>
+                  Vendedores
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../routes/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../routes/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>
+                  Productos
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../products/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../products/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../products/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>
+                  Gastos extras
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../extraexpenses/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../extraexpenses/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Inventario
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../inventory/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../inventory/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../inventory/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-search-location"></i>
+                <p>
+                  Localizaciones
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../locations/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../locations/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../locations/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Empleados
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../users/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../users/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../users/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-bag"></i>
+                <p>
+                  Proveedores
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../suppliers/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../suppliers/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!--<li class="nav-item">
+              <a href="../reports/reports.html" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                  Reportes
+
+                </p>
+              </a>
+            </li>-->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                  Reportes
+
+                </p>
+              </a>
+            </li>
+-->
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Vendedores</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active">Vendedores</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Vendedores</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <input id="dateInitial" type="date" class="form-control" placeholder="Fecha inicial">
+                      </div>
+                      <div class="col-md-3">
+                        <input id="dateFinal" type="date" class="form-control" placeholder="Fecha final">
+                      </div>
+                      <div class="col-md-3">
+                        <a id="btnFilter" class="btn btn-primary btn-block">Filtrar</a>
+                      </div>
+                      <div class="col-md-3">
+                        <a id="btnClear" class="btn btn-primary btn-block">Limpiar</a>
+
+                      </div>
+                    </div>
+
+                    <!-- <a id="btnSearch" class="btn btn-primary btn-block">Consultar</a> -->
+
+                  </div>
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Acciones</th>
+                        <th>ID</th>
+                        <th>Clientes</th>
+                        <th>Inventario</th>
+                        <th>Nombre del empleado</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Duplicable</th>
+
+                      </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Acciones</th>
+                        <th>ID</th>
+                        <th>Clientes</th>
+                        <th>Inventario</th>
+                        <th>Nombre del empleado</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Duplicable</th>
+
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <div class="popup-wrapper">
+                    <div class="popup">
+                      <div class="popup-close">x</div>
+                      <div class="popup-content">
+                        <h3>Productos</h3>
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Cantidad</th>
+                              <th>Nombre producto</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbodyproduct">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="popup-wrapper-sale">
+                    <div class="popup-sale">
+                      <div class="popup-close-sale">x</div>
+                      <div class="popup-content-sale">
+                        <h3>Productos</h3>
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>Nombre</th>
+                              <th>Cantidad</th>
+                              <th>Valor unitario</th>
+                              <th>Total</th>
+
+                            </tr>
+                          </thead>
+                          <tbody id="tbodyproductsale">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="popup-wrapper-client">
+                    <div class="popup-client">
+                      <div class="popup-close-client">x</div>
+                      <div class="popup-content-client">
+                        <h3>Cliente</h3>
+                        <h5 id=textInfo></h5>
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>Nombre</th>
+                              <th>Dirección</th>
+                              <th>Deuda</th>
+
+
+                            </tr>
+                          </thead>
+                          <tbody id="tbodyclient">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="popup-wrapper-summary">
+                    <div class="popup-summary">
+                      <div class="popup-close-summary">x</div>
+                      <div class="popup-content">
+                        <h3>Reporte</h3>
+                        <div class="loader"></div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                  <h5>Ventas</h5>
+                                  <div class="loader loader-sale"></div>
+
+                                  <thead>
+                                    <tr>
+                                      <th>ID</th>
+                                      <th>Nombre</th>
+                                      <th>Deposito</th>
+                                      <th>Productos vendidos</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbodysummaryproducts">
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                  <h5>Gastos</h5>
+                                  <div class="loader loader-expense"></div>
+
+                                  <thead>
+                                    <tr>
+                                      <th>Descripción</th>
+                                      <th>Valor</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbodysummaryextraexpense">
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <table class="table table-bordered table-striped">
+                                  <h5>Inventario</h5>
+                                  <div class="loader loader-inventory"></div>
+
+
+                                  <thead>
+                                    <tr>
+                                      <th>Nombre producto</th>
+                                      <th>Cantidad</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbodyinventary">
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="col-md-6">
+                                <table class="table table-bordered table-striped">
+                                  <h5>Inventario inicial</h5>
+                                  <div class="loader loader-inventory-initial"></div>
+                                  <thead>
+                                    <tr>
+                                      <th>Nombre producto</th>
+                                      <th>Cantidad</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbodyinventaryinitial">
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table table-bordered table-striped">
+                                  <h5>Resumen</h5>
+                                  <div class="loader loader-summary"></div>
+
+                                  <thead>
+                                    <tr>
+                                      <th>Descripción</th>
+                                      <th>Total</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbodysummary">
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="col-md-12" id=actionSummaryContent>
+                                <div id=actionSummary></div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <!-- <table class="table table-bordered table-striped">
+                          <thead>
+                            
+                          </thead>
+                          <tbody id="tbodysummary">
+                          </tbody>
+                        </table> -->
+                        <!-- <div class="row">
+                          <div class="col-md-6">
+                            <button id="accept" class="btn btn-primary">Aceptar</button>
+                          </div>
+                          <div class="col-md-6">
+                            <button id="cancel" class="btn btn-secondary">Cancelar</button>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Line Chart</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas id="lineChart"
+                      style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> -->
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2021 BCode S.A.S</a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="../../plugins/chart.js/Chart.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../plugins/jszip/jszip.min.js"></script>
+  <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes
+  <script src="../../dist/js/demo.js"></script> -->
+  <!-- Page specific script -->
+  <script>
+    let allProducts = [];
+    let allClients = [];
+    let allUsers = [];
+
+    function getStatus(idStatus) {
+      switch (idStatus) {
+        case 0:
+          return "Creada"
+        case 1:
+          return "En proceso"
+        case 2:
+          return "En revisión"
+        case 3:
+          return "Terminada"
+        default:
+          break;
+      }
+    }
+
+    function getDayName(date) {
+      switch (date) {
+        case "0":
+          return "Lunes"
+        case "1":
+          return "Martes"
+        case "2":
+          return "Miércoles"
+        case "3":
+          return "Jueves"
+        case "4":
+          return "Viernes"
+        case "5":
+          return "Sábado"
+        case "6":
+          return "Domingo"
+        default:
+          return "-"
+      }
+    }
+
+    function getDuplicate(id) {
+      switch (id) {
+        case 0:
+          return "No"
+        case 1:
+          return "Si"
+        default:
+          return "-"
+      }
+    }
+    fetch('http://3.93.67.74:3002/api/user', {
+      method: 'GET'
+    }).then(response => response.json())
+      .then(data => {
+        allUsers = data.data;
+        //console.log(allProducts)
+      })
+    function getNameUser(elementId) {
+      for (let index = 0; index < allUsers.length; index++) {
+        if (allUsers[index].id == elementId) {
+          return allUsers[index].name
+        }
+      }
+    }
+    $(function () {
+      fetch('http://3.93.67.74:3002/api/product', {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(data => {
+          allProducts = data.data;
+          //console.log(allProducts)
+        })
+      fetch('http://3.93.67.74:3002/api/customer/all', {
+        method: 'POST'
+      }).then(response => response.json())
+        .then(data => {
+          allClients = data.data;
+          //console.log(allProducts)
+        })
+
+
+      const button = document.querySelector('button');
+      const popup = document.querySelector('.popup-wrapper');
+      const close = document.querySelector('.popup-close');
+      const popupSale = document.querySelector('.popup-wrapper-sale');
+      const closeSale = document.querySelector('.popup-close-sale');
+      const popupSummary = document.querySelector('.popup-wrapper-summary');
+      const closeSummary = document.querySelector('.popup-close-summary');
+      const popupClient = document.querySelector('.popup-wrapper-client');
+      const closeClient = document.querySelector('.popup-close-client');
+      const loaderSale = document.querySelector('.loader-sale')
+      const loaderExpense = document.querySelector('.loader-expense')
+      const loaderSummary = document.querySelector('.loader-summary')
+      const loaderInventory = document.querySelector('.loader-inventory')
+      const loaderInventoryInitial = document.querySelector('.loader-inventory-initial')
+
+      var inventoryRoute = [];
+      var inventorySale = [];
+
+
+      fetch('http://3.93.67.74:3002/api/route/all', {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          var tblBody = document.getElementById("tbody");
+          data.data.forEach(element => {
+            //console.log(element)
+            var hilera = document.createElement("tr");
+            for (var j = 0; j < 8; j++) {
+              var celda = document.createElement("td");
+              switch (j) {
+                case 0:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Editar";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      localStorage.setItem("itemEdit", element.id)
+                      window.location.href = '../routes/update.html';
+                    }
+                  })
+                  var textoCelda2 = document.createElement('button')
+                  textoCelda2.innerHTML = "Ver reporte";
+                  Object.assign(textoCelda2, {
+                    className: 'ml-1 btn btn-primary',
+                    onclick: function () {
+                      //loader.style.display = 'block';
+                      tbodysummary = document.getElementById("tbodysummary");
+                      tbodysummaryproducts = document.getElementById("tbodysummaryproducts");
+                      tbodysummaryextraexpense = document.getElementById("tbodysummaryextraexpense");
+                      tbodyinventary = document.getElementById("tbodyinventary");
+                      tbodyinventaryinitial = document.getElementById("tbodyinventaryinitial");
+                      while (tbodysummary.lastElementChild) {
+                        tbodysummary.removeChild(tbodysummary.lastElementChild);
+                      }
+                      while (tbodysummaryproducts.lastElementChild) {
+                        tbodysummaryproducts.removeChild(tbodysummaryproducts.lastElementChild);
+                      }
+                      while (tbodysummaryextraexpense.lastElementChild) {
+                        tbodysummaryextraexpense.removeChild(tbodysummaryextraexpense.lastElementChild);
+                      }
+                      while (tbodyinventary.lastElementChild) {
+                        tbodyinventary.removeChild(tbodyinventary.lastElementChild);
+                      }
+                      while (tbodyinventaryinitial.lastElementChild) {
+                        tbodyinventaryinitial.removeChild(tbodyinventaryinitial.lastElementChild);
+                      }
+                      loaderSale.style.display = 'block';
+                      loaderSummary.style.display = 'block';
+                      fetch('http://3.93.67.74:3002/api/route/getInfoRoute', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.id
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+
+
+                          data.data.data.forEach(elementProducts => {
+                            var hileraProduct = document.createElement("tr");
+                            for (let indexProducts = 0; indexProducts < 4; indexProducts++) {
+                              var celdaProduct = document.createElement("td");
+                              switch (indexProducts) {
+                                case 0:
+                                  var textoCelda = document.createTextNode(elementProducts.customer.id);
+
+                                  break;
+                                case 1:
+                                  var textoCelda = document.createTextNode(elementProducts.customer.title);
+
+                                  break;
+                                case 2:
+                                  var textoCelda = document.createTextNode(elementProducts.depositSale);
+
+                                  break;
+                                case 3:
+                                  // var textoCelda = document.createTextNode(elementProducts.products);
+                                  var textoCelda = document.createElement('button')
+                                  inventorySale = elementProducts.products;
+                                  textoCelda.innerHTML = "Ver productos";
+                                  Object.assign(textoCelda, {
+                                    className: 'btn btn-primary',
+                                    onclick: function () {
+
+                                      tbodyproductsale = document.getElementById("tbodyproductsale");
+                                      while (tbodyproductsale.lastElementChild) {
+                                        tbodyproductsale.removeChild(tbodyproductsale.lastElementChild);
+                                      }
+
+
+                                      elementProducts.products.forEach(elementProducts => {
+                                        var hileraProduct = document.createElement("tr");
+                                        for (var j = 0; j < 4; j++) {
+                                          var celdaProduct = document.createElement("td");
+                                          switch (j) {
+                                            case 0:
+                                              var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                              break;
+                                            case 1:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.quantity);
+                                              break;
+                                            case 2:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.price);
+                                              break;
+                                            case 3:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.total);
+                                              break;
+                                          }
+                                          celdaProduct.appendChild(textoCeldaProduct);
+                                          hileraProduct.appendChild(celdaProduct);
+                                        }
+                                        tbodyproductsale.appendChild(hileraProduct);
+                                      });
+                                      popupSale.style.display = 'block';
+                                      closeSale.addEventListener('click', () => {
+                                        popupSale.style.display = 'none';
+                                      });
+                                      popupSale.addEventListener('click', e => {
+                                        // console.log(e);
+                                        if (e.target.className === 'popup-wrapper-sale') {
+                                          popupSale.style.display = 'none';
+                                        }
+                                      });
+
+
+
+                                    }
+                                  })
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaProduct.appendChild(textoCelda);
+                              hileraProduct.appendChild(celdaProduct);
+                            }
+                            tbodysummaryproducts.appendChild(hileraProduct);
+
+                          });
+
+
+                          for (let i = 0; i < 7; i++) {
+                            var hileraSummary = document.createElement("tr");
+
+                            for (let j = 0; j < 2; j++) {
+                              var celdaSummary = document.createElement("td");
+                              switch (j) {
+                                case 0:
+                                  switch (i) {
+                                    // case 0:
+                                    //   var textoCeldaSummary = document.createTextNode("Abono");
+                                    //   break;
+                                    case 0:
+                                      var textoCeldaSummary = document.createTextNode("Deposito");
+                                      break;
+                                    case 1:
+                                      var textoCeldaSummary = document.createTextNode("Gastos extra");
+                                      break;
+                                    case 2:
+                                      var textoCeldaSummary = document.createTextNode("Total de ventas");
+                                      break;
+                                    case 3:
+                                      var textoCeldaSummary = document.createTextNode("Porcentaje de ganancia");
+                                      break;
+                                    case 4:
+                                      var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Sin gastos extra)");
+                                      break;
+                                    case 5:
+                                      var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Con gastos extra)");
+                                      break;
+                                    case 6:
+                                      var textoCeldaSummary = document.createTextNode("Deuda al vendedor");
+                                      break;
+
+                                    default:
+                                      break;
+                                  }
+                                  break;
+                                case 1:
+                                  switch (i) {
+                                    // case 0:
+                                    //   var textoCeldaSummary = document.createTextNode(data.data.abono);
+
+                                    //   break;
+                                    case 0:
+                                      var textoCeldaSummary = document.createTextNode(data.data.deposit);
+
+                                      break;
+                                    case 1:
+                                      var textoCeldaSummary = document.createTextNode(data.data.extraExpense);
+
+                                      break;
+                                    case 2:
+                                      var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct);
+
+                                      break;
+                                    case 3:
+                                      var textoCeldaSummary = document.createTextNode(data.data.routeInfo.percentaje);
+                                      break;
+                                    case 4:
+                                      var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)));
+
+                                      break;
+                                    case 5:
+                                      var textoCeldaSummary = document.createTextNode((data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)) - data.data.extraExpense));
+
+                                      break;
+                                    case 6:
+                                      var textoCeldaSummary = document.createTextNode(data.data.deposit * (data.data.routeInfo.percentaje / 100));
+                                      break;
+
+                                    default:
+                                      break;
+                                  }
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaSummary.appendChild(textoCeldaSummary);
+                              // celdaSummary.appendChild(btnAction);
+                              hileraSummary.appendChild(celdaSummary);
+                            }
+                            tbodysummary.appendChild(hileraSummary);
+
+
+                          }
+                          loaderSale.style.display = 'none';
+                          loaderSummary.style.display = 'none';
+
+                          if (element.state == 2) {
+                            //$("#actionSummary").removeChild($("#actionSummary").lastElementChild);
+                            var div = document.getElementById("actionSummaryContent")
+                            //console.log(div.hasChildNodes())
+                            if (div !== null) {
+                              //console.log("Hi")
+                              while (div.hasChildNodes()) {
+                                div.removeChild(div.lastChild);
+                              }
+                            }
+                            var divBody = document.createElement('div')
+                            divBody.setAttribute("id", "actionSummary");
+                            div.appendChild(divBody);
+                            var buttonCancelRoute = document.createElement('button')
+                            buttonCancelRoute.innerHTML = "Cancelar";
+                            Object.assign(buttonCancelRoute, {
+                              className: 'btn btn-secondary ml-5',
+                              onclick: function () {
+                                popupSummary.style.display = 'none';
+                              }
+                            })
+                            $("#actionSummary").first().after(buttonCancelRoute);
+                            // $("#actionSummary").appendChild(buttonCancelRoute);
+
+
+                            var buttonEndRoute = document.createElement('button')
+                            buttonEndRoute.innerHTML = "Terminar ruta";
+                            Object.assign(buttonEndRoute, {
+                              className: 'btn btn-primary mr-5',
+                              onclick: function () {
+                                let inventoryFinal = inventoryRoute;
+                                inventoryRoute.forEach((elementInventoryRoute, index) => {
+                                  inventoryFinal[index].count = document.getElementById("cant" + index).value;
+                                })
+                                //console.log(inventoryFinal)
+
+                                var answer = window.confirm("Quieres finalizar la ruta?");
+                                if (answer) {
+
+                                  fetch('http://3.93.67.74:3002/api/inventory/update', {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                      id: element.inventory,
+                                      products: JSON.stringify(inventoryFinal)
+                                    })
+                                  })
+                                    .then(response => response.json())
+                                    .then(dataInventory => {
+                                      //console.log(data)
+                                      if (dataInventory.code === 200 && dataInventory.message === "Updated successfully" && dataInventory.data) {
+                                        fetch('http://3.93.67.74:3002/api/user/addProfit', {
+                                          method: 'POST',
+                                          headers: { 'Content-Type': 'application/json' },
+                                          body: JSON.stringify({
+                                            id: element.idUser,
+                                            profit: data.data.deposit * (data.data.routeInfo.percentaje / 100)
+                                          })
+                                        }).then(response => response.json())
+                                          .then(dataUser => {
+                                            if (dataUser.code === 200 && dataUser.message === "Request successful" && dataUser.data) {
+                                              fetch('http://3.93.67.74:3002/api/route/update', {
+                                                method: 'PUT',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({
+                                                  id: element.id,
+                                                  // idCustomers: idCustomers,
+                                                  // inventory: inventory,
+                                                  // idUser: idUserFromSelect,
+                                                  // date: date,
+                                                  state: 3,
+                                                  //percentaje: percentaje
+                                                })
+                                              })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                  //console.log(data)
+                                                  if (data.code === 200 && data.message === "Updated successfully") {
+                                                    $(location).attr('href', './list.html')
+                                                    popupSummary.style.display = 'none';
+                                                  }
+                                                });
+
+
+                                              popupSummary.style.display = 'none';
+                                            }
+                                          })
+
+                                      }
+                                    });
+
+
+                                }
+                                else {
+                                  //console.log("No")
+                                }
+
+
+                              }
+                            })
+
+                            $("#actionSummary").first().after(buttonEndRoute);
+                            // $("#actionSummary").appendChild(buttonEndRoute);
+
+
+
+                          }
+
+                        }).catch(e => {
+                          console.log(e)
+                        })
+                      loaderExpense.style.display = 'block';
+
+                      fetch('http://3.93.67.74:3002/api/extraexpense/all', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          idRoute: element.id
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data.length == 0) loaderExpense.style.display = 'none';
+
+                          data.data.forEach(elementExtraExpense => {
+                            var hileraProduct = document.createElement("tr");
+                            for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                              var celdaProduct = document.createElement("td");
+                              switch (indexProducts) {
+                                case 0:
+                                  var textoCelda = document.createTextNode(elementExtraExpense.description);
+
+                                  break;
+                                case 1:
+                                  var textoCelda = document.createTextNode(elementExtraExpense.price);
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaProduct.appendChild(textoCelda);
+                              hileraProduct.appendChild(celdaProduct);
+                            }
+                            tbodysummaryextraexpense.appendChild(hileraProduct);
+                            loaderExpense.style.display = 'none';
+
+                          });
+                        })
+                      loaderInventory.style.display = 'block';
+
+                      fetch('http://3.93.67.74:3002/api/inventory/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.inventory
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          setTimeout(() => {
+                            let inventoryRouteTemp = JSON.parse(data.data.products)
+                            //console.log(inventorySale)
+                            for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                              for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                  inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                  //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                }
+                              }
+                            }
+                            inventoryRoute = inventoryRouteTemp
+                            //console.log(inventoryRoute)
+                            inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                              var hileraInventory = document.createElement("tr");
+                              for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                var celdaInventory = document.createElement("td");
+                                switch (indexProducts) {
+                                  case 0:
+                                    var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                    break;
+                                  case 1:
+                                    //var textoCelda = document.createTextNode(elementInventory.count);
+                                    var textoCelda = document.createElement("input");
+                                    Object.assign(textoCelda, {
+                                      className: 'col-md-12 form-control',
+
+                                    })
+                                    textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                    textoCelda.value = elementInventory.count;
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                celdaInventory.appendChild(textoCelda);
+                                hileraInventory.appendChild(celdaInventory);
+                              }
+                              tbodyinventary.appendChild(hileraInventory);
+                              loaderInventory.style.display = 'none';
+
+                            });
+                          }, 2000);
+
+                        })
+                      loaderInventoryInitial.style.display = 'block';
+                      if (element.inventoryInitial != "0") {
+                        fetch('http://3.93.67.74:3002/api/inventoryInitial/read', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.inventoryInitial
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            setTimeout(() => {
+                              let inventoryRouteTemp = JSON.parse(data.data.products)
+                              //console.log(inventorySale)
+                              for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                                for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                  if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                    inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                    //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                  }
+                                }
+                              }
+                              inventoryRoute = inventoryRouteTemp
+                              //console.log(inventoryRoute)
+                              inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                                var hileraInventoryinitial = document.createElement("tr");
+                                for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                  var celdaInventoryinitial = document.createElement("td");
+                                  switch (indexProducts) {
+                                    case 0:
+                                      var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                      break;
+                                    case 1:
+                                      //var textoCelda = document.createTextNode(elementInventory.count);
+                                      var textoCelda = document.createElement("input");
+                                      Object.assign(textoCelda, {
+                                        className: 'col-md-12 form-control',
+
+                                      })
+                                      textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                      textoCelda.value = elementInventory.count;
+                                      textoCelda.disabled = true;
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                  celdaInventoryinitial.appendChild(textoCelda);
+                                  hileraInventoryinitial.appendChild(celdaInventoryinitial);
+                                }
+                                tbodyinventaryinitial.appendChild(hileraInventoryinitial);
+                                loaderInventoryInitial.style.display = 'none';
+
+                              });
+                            }, 2000);
+
+                          })
+                      } else {
+                        loaderInventoryInitial.style.display = 'none';
+                      }
+                      popupSummary.style.display = 'block';
+                      closeSummary.addEventListener('click', () => {
+                        popupSummary.style.display = 'none';
+                      });
+                      popupSummary.addEventListener('click', e => {
+                        // console.log(e);
+                        if (e.target.className === 'popup-wrapper-summary') {
+                          popupSummary.style.display = 'none';
+                        }
+                      });
+                    }
+                  })
+
+                  var textoCeldaDelete = document.createElement('button')
+                  textoCeldaDelete.innerHTML = "Eliminar";
+                  Object.assign(textoCeldaDelete, {
+                    className: 'ml-1 btn btn-danger',
+                    onclick: function () {
+                      var answerDelete = window.confirm("Quieres eliminar esta la ruta?");
+                      if (answerDelete) {
+                        var answerDeleteConfirm = window.confirm("Esta eliminacioón es permanente. Quiere continuar?");
+                        if (answerDeleteConfirm) {
+                          fetch('http://3.93.67.74:3002/api/route/delete', {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: element.id })
+                          })
+                            .then(response => response.json())
+                            .then(data => {
+                              if (data.data == 1) {
+                                window.location.href = '../routes/list.html';
+                              } else {
+                                alert("No fue posible eliminar esta ruta")
+                              }
+                            }).catch(e => console.log(e))
+                        }
+                      }
+                    }
+                  })
+                  break;
+                case 1:
+                  var textoCelda = document.createTextNode(element.id);
+                  break;
+                case 2:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Ver clientes";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      fetch('http://3.93.67.74:3002/api/customerList/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.idCustomers
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data) {
+                            var textInfo = document.getElementById("textInfo");
+                            textInfo.textContent = ""
+                            tbodyclient = document.getElementById("tbodyclient");
+                            while (tbodyclient.lastElementChild) {
+                              tbodyclient.removeChild(tbodyclient.lastElementChild);
+                            }
+                            if (element.idCustomers == "" || JSON.parse(element.idCustomers).length == 0) {
+                              var textInfo = document.getElementById("textInfo");
+                              textInfo.textContent = "No hay clientes asignados"
+                              popupClient.style.display = 'block';
+                              closeClient.addEventListener('click', () => {
+                                popupClient.style.display = 'none';
+                              });
+                              popupClient.addEventListener('click', e => {
+                                // console.log(e);
+                                if (e.target.className === 'popup-wrapper-client') {
+                                  popupClient.style.display = 'none';
+                                }
+                              });
+                            } else {
+                              JSON.parse(data.data.customers).forEach(elementProducts => {
+                                var hileraClient = document.createElement("tr");
+                                for (var j = 0; j < 3; j++) {
+                                  var celdaClient = document.createElement("td");
+                                  switch (j) {
+                                    case 0:
+                                      var textoCeldaClient = document.createTextNode(getNameClient(elementProducts.id));
+                                      break;
+                                    case 1:
+                                      var textoCeldaClient = document.createTextNode(getAddressClient(elementProducts.id));
+                                      break;
+                                    case 2:
+                                      var textoCeldaClient = document.createTextNode(getDueClient(elementProducts.id));
+                                      break;
+                                  }
+                                  celdaClient.appendChild(textoCeldaClient);
+                                  hileraClient.appendChild(celdaClient);
+                                }
+                                tbodyclient.appendChild(hileraClient);
+                              });
+                              popupClient.style.display = 'block';
+                              closeClient.addEventListener('click', () => {
+                                popupClient.style.display = 'none';
+                              });
+                              popupClient.addEventListener('click', e => {
+                                // console.log(e);
+                                if (e.target.className === 'popup-wrapper-client') {
+                                  popupClient.style.display = 'none';
+                                }
+                              });
+                            }
+                          }
+
+
+                        });
+                    }
+                  })
+                  break;
+                case 3:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Ver inventario";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      fetch('http://3.93.67.74:3002/api/inventory/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.inventory
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data) {
+                            tbodyproduct = document.getElementById("tbodyproduct");
+                            while (tbodyproduct.lastElementChild) {
+                              tbodyproduct.removeChild(tbodyproduct.lastElementChild);
+                            }
+                            JSON.parse(data.data.products).forEach(elementProducts => {
+                              var hileraProduct = document.createElement("tr");
+                              for (var j = 0; j < 3; j++) {
+                                var celdaProduct = document.createElement("td");
+                                switch (j) {
+                                  case 0:
+                                    var textoCeldaProduct = document.createTextNode(elementProducts.id);
+                                    break;
+                                  case 1:
+                                    var textoCeldaProduct = document.createTextNode(elementProducts.count);
+                                    break;
+                                  case 2:
+                                    var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                    break;
+                                }
+                                celdaProduct.appendChild(textoCeldaProduct);
+                                hileraProduct.appendChild(celdaProduct);
+                              }
+                              tbodyproduct.appendChild(hileraProduct);
+                            });
+                            popup.style.display = 'block';
+                            close.addEventListener('click', () => {
+                              popup.style.display = 'none';
+                            });
+                            popup.addEventListener('click', e => {
+                              // console.log(e);
+                              if (e.target.className === 'popup-wrapper') {
+                                popup.style.display = 'none';
+                              }
+                            });
+                          }
+
+
+                        });
+
+
+                    }
+                  })
+                  break;
+                case 4:
+                  var textoCelda = document.createTextNode(getNameUser(element.idUser));
+                  break;
+                case 5:
+                  var textoCelda = document.createTextNode(getDayName(element.date));
+                  break;
+                case 6:
+                  var textoCelda = document.createTextNode(getStatus(element.state));
+                  break;
+                case 7:
+                  var textoCelda = document.createTextNode(getDuplicate(element.duplicate));
+                  break;
+
+                default:
+                  break;
+              }
+              celda.appendChild(textoCelda);
+              if (j == 0) {
+                if (textoCelda2) celda.appendChild(textoCelda2);
+                if (textoCeldaDelete) celda.appendChild(textoCeldaDelete);
+              }
+
+              hilera.appendChild(celda);
+            }
+            tblBody.appendChild(hilera);
+          });
+          // $("#example1").DataTable({
+          //   "responsive": true, "lengthChange": false, "autoWidth": false,
+          //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+      // $('button[id=cancel]').click(function () {
+      // })
+      // $('button[id=accept]').click(function () {
+      //   fetch('http://3.93.67.74:3002/api/route/update', {
+      //     method: 'PUT',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       id: id,
+      //       // idCustomers: idCustomers,
+      //       inventory: inventory,
+      //       idUser: idUserFromSelect,
+      //       date: date,
+      //       //state: state,
+      //       percentaje: percentaje
+      //     })
+      //   })
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       console.log(data)
+      //       if (data.code === 200 && data.message === "Updated successfully") {
+      //         //$(location).attr('href', './list.html')
+      //       }
+      //     });
+
+      //   popupSummary.style.display = 'none';
+
+      // })
+      // var areaChartData = {
+      //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      //   datasets: [
+      //     {
+      //       label: 'Digital Goods',
+      //       backgroundColor: 'rgba(60,141,188,0.9)',
+      //       borderColor: 'rgba(60,141,188,0.8)',
+      //       pointRadius: false,
+      //       pointColor: '#3b8bba',
+      //       pointStrokeColor: 'rgba(60,141,188,1)',
+      //       pointHighlightFill: '#fff',
+      //       pointHighlightStroke: 'rgba(60,141,188,1)',
+      //       data: [28, 48, 40, 19, 86, 27, 90]
+      //     },
+      //     {
+      //       label: 'Electronics',
+      //       backgroundColor: 'rgba(210, 214, 222, 1)',
+      //       borderColor: 'rgba(210, 214, 222, 1)',
+      //       pointRadius: false,
+      //       pointColor: 'rgba(210, 214, 222, 1)',
+      //       pointStrokeColor: '#c1c7d1',
+      //       pointHighlightFill: '#fff',
+      //       pointHighlightStroke: 'rgba(220,220,220,1)',
+      //       data: [65, 59, 80, 81, 56, 55, 40]
+      //     },
+      //   ]
+      // }
+
+      // var areaChartOptions = {
+      //   maintainAspectRatio: false,
+      //   responsive: true,
+      //   legend: {
+      //     display: false
+      //   },
+      //   scales: {
+      //     xAxes: [{
+      //       gridLines: {
+      //         display: false,
+      //       }
+      //     }],
+      //     yAxes: [{
+      //       gridLines: {
+      //         display: false,
+      //       }
+      //     }]
+      //   }
+      // }
+
+      // var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+      // var lineChartOptions = $.extend(true, {}, areaChartOptions)
+      // var lineChartData = $.extend(true, {}, areaChartData)
+      // lineChartData.datasets[0].fill = false;
+      // lineChartData.datasets[1].fill = false;
+      // lineChartOptions.datasetFill = false
+
+      // var lineChart = new Chart(lineChartCanvas, {
+      //   type: 'line',
+      //   data: lineChartData,
+      //   options: lineChartOptions
+      // })
+    });
+    function getNameProduct(elementId) {
+      for (let index = 0; index < allProducts.length; index++) {
+        if (allProducts[index].id == elementId) {
+          return allProducts[index].name
+        }
+      }
+    }
+    function getNameClient(elementId) {
+      for (let index = 0; index < allClients.length; index++) {
+        if (allClients[index].id == elementId) {
+          return allClients[index].title
+        }
+      }
+    }
+    function getAddressClient(elementId) {
+      for (let index = 0; index < allClients.length; index++) {
+        if (allClients[index].id == elementId) {
+          return allClients[index].address
+        }
+      }
+    }
+    function getDueClient(elementId) {
+      for (let index = 0; index < allClients.length; index++) {
+        if (allClients[index].id == elementId) {
+          return allClients[index].due
+        }
+      }
+    }
+
+  </script>
+  <script>
+    $('a[id=btnFilter]').click(function () {
+      const button = document.querySelector('button');
+      const popup = document.querySelector('.popup-wrapper');
+      const close = document.querySelector('.popup-close');
+      const popupSale = document.querySelector('.popup-wrapper-sale');
+      const closeSale = document.querySelector('.popup-close-sale');
+      const popupSummary = document.querySelector('.popup-wrapper-summary');
+      const closeSummary = document.querySelector('.popup-close-summary');
+      const popupClient = document.querySelector('.popup-wrapper-client');
+      const closeClient = document.querySelector('.popup-close-client');
+      const loaderSale = document.querySelector('.loader-sale')
+      const loaderExpense = document.querySelector('.loader-expense')
+      const loaderSummary = document.querySelector('.loader-summary')
+      const loaderInventory = document.querySelector('.loader-inventory')
+      var dateInitial = document.getElementById('dateInitial').value;
+      var dateFinal = document.getElementById('dateFinal').value;
+      var inventoryRoute = [];
+      var inventorySale = [];
+
+      let bodyData = {};
+      if (dateInitial === "" && dateFinal === "" || dateInitial === null && dateFinal === null) {
+        alert("Ingresa una fecha para filtrar")
+      } else {
+        if (dateInitial != "" && dateInitial != null) {
+          bodyData = {
+            dateInitial: dateInitial
+          }
+        }
+        if (dateFinal != "" && dateFinal != null) {
+          bodyData = {
+            dateFinal: dateFinal
+          }
+        }
+        if (dateInitial != "" && dateFinal != "" && dateInitial != null && dateFinal != null) {
+          bodyData = {
+            dateInitial: dateInitial,
+            dateFinal: dateFinal
+          }
+        }
+        fetch('http://3.93.67.74:3002/api/route/all', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            var tblBody = document.getElementById("tbody");
+            while (tblBody.lastElementChild) {
+              tblBody.removeChild(tblBody.lastElementChild);
+            }
+            data.data.forEach(element => {
+              //console.log(element)
+              var hilera = document.createElement("tr");
+              for (var j = 0; j < 8; j++) {
+                var celda = document.createElement("td");
+                switch (j) {
+                  case 0:
+                    var textoCelda = document.createElement('button')
+                    textoCelda.innerHTML = "Editar";
+                    Object.assign(textoCelda, {
+                      className: 'btn btn-primary',
+                      onclick: function () {
+                        localStorage.setItem("itemEdit", element.id)
+                        window.location.href = '../routes/update.html';
+                      }
+                    })
+                    var textoCelda2 = document.createElement('button')
+                    textoCelda2.innerHTML = "Ver reporte";
+                    Object.assign(textoCelda2, {
+                      className: 'ml-1 btn btn-primary',
+                      onclick: function () {
+                        //loader.style.display = 'block';
+                        tbodysummary = document.getElementById("tbodysummary");
+                        tbodysummaryproducts = document.getElementById("tbodysummaryproducts");
+                        tbodysummaryextraexpense = document.getElementById("tbodysummaryextraexpense");
+                        tbodyinventary = document.getElementById("tbodyinventary");
+                        tbodyinventaryinitial = document.getElementById("tbodyinventaryinitial");
+                        while (tbodysummary.lastElementChild) {
+                          tbodysummary.removeChild(tbodysummary.lastElementChild);
+                        }
+                        while (tbodysummaryproducts.lastElementChild) {
+                          tbodysummaryproducts.removeChild(tbodysummaryproducts.lastElementChild);
+                        }
+                        while (tbodysummaryextraexpense.lastElementChild) {
+                          tbodysummaryextraexpense.removeChild(tbodysummaryextraexpense.lastElementChild);
+                        }
+                        while (tbodyinventary.lastElementChild) {
+                          tbodyinventary.removeChild(tbodyinventary.lastElementChild);
+                        }
+                        while (tbodyinventaryinitial.lastElementChild) {
+                          tbodyinventaryinitial.removeChild(tbodyinventaryinitial.lastElementChild);
+                        }
+                        loaderSale.style.display = 'block';
+                        loaderSummary.style.display = 'block';
+                        fetch('http://3.93.67.74:3002/api/route/getInfoRoute', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.id
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+
+
+                            data.data.data.forEach(elementProducts => {
+                              var hileraProduct = document.createElement("tr");
+                              for (let indexProducts = 0; indexProducts < 4; indexProducts++) {
+                                var celdaProduct = document.createElement("td");
+                                switch (indexProducts) {
+                                  case 0:
+                                    var textoCelda = document.createTextNode(elementProducts.customer.id);
+
+                                    break;
+                                  case 1:
+                                    var textoCelda = document.createTextNode(elementProducts.customer.title);
+
+                                    break;
+                                  case 2:
+                                    var textoCelda = document.createTextNode(elementProducts.depositSale);
+
+                                    break;
+                                  case 3:
+                                    // var textoCelda = document.createTextNode(elementProducts.products);
+                                    var textoCelda = document.createElement('button')
+                                    inventorySale = elementProducts.products;
+                                    textoCelda.innerHTML = "Ver productos";
+                                    Object.assign(textoCelda, {
+                                      className: 'btn btn-primary',
+                                      onclick: function () {
+
+                                        tbodyproductsale = document.getElementById("tbodyproductsale");
+                                        while (tbodyproductsale.lastElementChild) {
+                                          tbodyproductsale.removeChild(tbodyproductsale.lastElementChild);
+                                        }
+
+
+                                        elementProducts.products.forEach(elementProducts => {
+                                          var hileraProduct = document.createElement("tr");
+                                          for (var j = 0; j < 4; j++) {
+                                            var celdaProduct = document.createElement("td");
+                                            switch (j) {
+                                              case 0:
+                                                var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                                break;
+                                              case 1:
+                                                var textoCeldaProduct = document.createTextNode(elementProducts.quantity);
+                                                break;
+                                              case 2:
+                                                var textoCeldaProduct = document.createTextNode(elementProducts.price);
+                                                break;
+                                              case 3:
+                                                var textoCeldaProduct = document.createTextNode(elementProducts.total);
+                                                break;
+                                            }
+                                            celdaProduct.appendChild(textoCeldaProduct);
+                                            hileraProduct.appendChild(celdaProduct);
+                                          }
+                                          tbodyproductsale.appendChild(hileraProduct);
+                                        });
+                                        popupSale.style.display = 'block';
+                                        closeSale.addEventListener('click', () => {
+                                          popupSale.style.display = 'none';
+                                        });
+                                        popupSale.addEventListener('click', e => {
+                                          // console.log(e);
+                                          if (e.target.className === 'popup-wrapper-sale') {
+                                            popupSale.style.display = 'none';
+                                          }
+                                        });
+
+
+
+                                      }
+                                    })
+
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                celdaProduct.appendChild(textoCelda);
+                                hileraProduct.appendChild(celdaProduct);
+                              }
+                              tbodysummaryproducts.appendChild(hileraProduct);
+
+                            });
+
+
+                            for (let i = 0; i < 7; i++) {
+                              var hileraSummary = document.createElement("tr");
+
+                              for (let j = 0; j < 2; j++) {
+                                var celdaSummary = document.createElement("td");
+                                switch (j) {
+                                  case 0:
+                                    switch (i) {
+                                      // case 0:
+                                      //   var textoCeldaSummary = document.createTextNode("Abono");
+                                      //   break;
+                                      case 0:
+                                        var textoCeldaSummary = document.createTextNode("Deposito");
+                                        break;
+                                      case 1:
+                                        var textoCeldaSummary = document.createTextNode("Gastos extra");
+                                        break;
+                                      case 2:
+                                        var textoCeldaSummary = document.createTextNode("Total de ventas");
+                                        break;
+                                      case 3:
+                                        var textoCeldaSummary = document.createTextNode("Porcentaje de ganancia");
+                                        break;
+                                      case 4:
+                                        var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Sin gastos extra)");
+                                        break;
+                                      case 5:
+                                        var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Con gastos extra)");
+                                        break;
+                                      case 6:
+                                        var textoCeldaSummary = document.createTextNode("Deuda al vendedor");
+                                        break;
+
+                                      default:
+                                        break;
+                                    }
+                                    break;
+                                  case 1:
+                                    switch (i) {
+                                      // case 0:
+                                      //   var textoCeldaSummary = document.createTextNode(data.data.abono);
+
+                                      //   break;
+                                      case 0:
+                                        var textoCeldaSummary = document.createTextNode(data.data.deposit);
+
+                                        break;
+                                      case 1:
+                                        var textoCeldaSummary = document.createTextNode(data.data.extraExpense);
+
+                                        break;
+                                      case 2:
+                                        var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct);
+
+                                        break;
+                                      case 3:
+                                        var textoCeldaSummary = document.createTextNode(data.data.routeInfo.percentaje);
+                                        break;
+                                      case 4:
+                                        var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)));
+
+                                        break;
+                                      case 5:
+                                        var textoCeldaSummary = document.createTextNode((data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)) - data.data.extraExpense));
+
+                                        break;
+                                      case 6:
+                                        var textoCeldaSummary = document.createTextNode(data.data.deposit * (data.data.routeInfo.percentaje / 100));
+                                        break;
+
+                                      default:
+                                        break;
+                                    }
+
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                celdaSummary.appendChild(textoCeldaSummary);
+                                // celdaSummary.appendChild(btnAction);
+                                hileraSummary.appendChild(celdaSummary);
+                              }
+                              tbodysummary.appendChild(hileraSummary);
+
+
+                            }
+                            loaderSale.style.display = 'none';
+                            loaderSummary.style.display = 'none';
+
+                            if (element.state == 2) {
+                              //$("#actionSummary").removeChild($("#actionSummary").lastElementChild);
+                              var div = document.getElementById("actionSummaryContent")
+                              //console.log(div.hasChildNodes())
+                              if (div !== null) {
+                                //console.log("Hi")
+                                while (div.hasChildNodes()) {
+                                  div.removeChild(div.lastChild);
+                                }
+                              }
+                              var divBody = document.createElement('div')
+                              divBody.setAttribute("id", "actionSummary");
+                              div.appendChild(divBody);
+                              var buttonCancelRoute = document.createElement('button')
+                              buttonCancelRoute.innerHTML = "Cancelar";
+                              Object.assign(buttonCancelRoute, {
+                                className: 'btn btn-secondary ml-5',
+                                onclick: function () {
+                                  popupSummary.style.display = 'none';
+                                }
+                              })
+                              $("#actionSummary").first().after(buttonCancelRoute);
+                              // $("#actionSummary").appendChild(buttonCancelRoute);
+
+
+                              var buttonEndRoute = document.createElement('button')
+                              buttonEndRoute.innerHTML = "Terminar ruta";
+                              Object.assign(buttonEndRoute, {
+                                className: 'btn btn-primary mr-5',
+                                onclick: function () {
+                                  let inventoryFinal = inventoryRoute;
+                                  inventoryRoute.forEach((elementInventoryRoute, index) => {
+                                    inventoryFinal[index].count = document.getElementById("cant" + index).value;
+                                  })
+                                  //console.log(inventoryFinal)
+
+                                  var answer = window.confirm("Quieres finalizar la ruta?");
+                                  if (answer) {
+
+                                    fetch('http://3.93.67.74:3002/api/inventory/update', {
+                                      method: 'PUT',
+                                      headers: { 'Content-Type': 'application/json' },
+                                      body: JSON.stringify({
+                                        id: element.inventory,
+                                        products: JSON.stringify(inventoryFinal)
+                                      })
+                                    })
+                                      .then(response => response.json())
+                                      .then(dataInventory => {
+                                        //console.log(data)
+                                        if (dataInventory.code === 200 && dataInventory.message === "Updated successfully" && dataInventory.data) {
+                                          fetch('http://3.93.67.74:3002/api/user/addProfit', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                              id: element.idUser,
+                                              profit: data.data.deposit * (data.data.routeInfo.percentaje / 100)
+                                            })
+                                          }).then(response => response.json())
+                                            .then(dataUser => {
+                                              if (dataUser.code === 200 && dataUser.message === "Request successful" && dataUser.data) {
+                                                fetch('http://3.93.67.74:3002/api/route/update', {
+                                                  method: 'PUT',
+                                                  headers: { 'Content-Type': 'application/json' },
+                                                  body: JSON.stringify({
+                                                    id: element.id,
+                                                    // idCustomers: idCustomers,
+                                                    // inventory: inventory,
+                                                    // idUser: idUserFromSelect,
+                                                    // date: date,
+                                                    state: 3,
+                                                    //percentaje: percentaje
+                                                  })
+                                                })
+                                                  .then(response => response.json())
+                                                  .then(data => {
+                                                    //console.log(data)
+                                                    if (data.code === 200 && data.message === "Updated successfully") {
+                                                      $(location).attr('href', './list.html')
+                                                      popupSummary.style.display = 'none';
+                                                    }
+                                                  });
+
+
+                                                popupSummary.style.display = 'none';
+                                              }
+                                            })
+
+                                        }
+                                      });
+
+
+                                  }
+                                  else {
+                                    //console.log("No")
+                                  }
+
+
+                                }
+                              })
+
+                              $("#actionSummary").first().after(buttonEndRoute);
+                              // $("#actionSummary").appendChild(buttonEndRoute);
+
+
+
+                            }
+
+                          }).catch(e => {
+                            console.log(e)
+                          })
+                        loaderExpense.style.display = 'block';
+
+                        fetch('http://3.93.67.74:3002/api/extraexpense/all', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            idRoute: element.id
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            if (data.data.length == 0) loaderExpense.style.display = 'none';
+
+                            data.data.forEach(elementExtraExpense => {
+                              var hileraProduct = document.createElement("tr");
+                              for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                var celdaProduct = document.createElement("td");
+                                switch (indexProducts) {
+                                  case 0:
+                                    var textoCelda = document.createTextNode(elementExtraExpense.description);
+
+                                    break;
+                                  case 1:
+                                    var textoCelda = document.createTextNode(elementExtraExpense.price);
+
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                celdaProduct.appendChild(textoCelda);
+                                hileraProduct.appendChild(celdaProduct);
+                              }
+                              tbodysummaryextraexpense.appendChild(hileraProduct);
+                              loaderExpense.style.display = 'none';
+
+                            });
+                          })
+                        loaderInventory.style.display = 'block';
+
+                        fetch('http://3.93.67.74:3002/api/inventory/read', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.inventory
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            setTimeout(() => {
+                              let inventoryRouteTemp = JSON.parse(data.data.products)
+                              //console.log(inventorySale)
+                              for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                                for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                  if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                    inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                    //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                  }
+                                }
+                              }
+                              inventoryRoute = inventoryRouteTemp
+                              //console.log(inventoryRoute)
+                              inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                                var hileraInventory = document.createElement("tr");
+                                for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                  var celdaInventory = document.createElement("td");
+                                  switch (indexProducts) {
+                                    case 0:
+                                      var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                      break;
+                                    case 1:
+                                      //var textoCelda = document.createTextNode(elementInventory.count);
+                                      var textoCelda = document.createElement("input");
+                                      Object.assign(textoCelda, {
+                                        className: 'col-md-12 form-control',
+
+                                      })
+                                      textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                      textoCelda.value = elementInventory.count;
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                  celdaInventory.appendChild(textoCelda);
+                                  hileraInventory.appendChild(celdaInventory);
+                                }
+                                tbodyinventary.appendChild(hileraInventory);
+                                loaderInventory.style.display = 'none';
+
+                              });
+                            }, 2000);
+
+                          })
+                        loaderInventoryInitial.style.display = 'block';
+                        if (element.inventoryInitial != "0") {
+                          fetch('http://3.93.67.74:3002/api/inventoryInitial/read', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              id: element.inventoryInitial
+                            })
+                          }).then(response => response.json())
+                            .then(data => {
+                              setTimeout(() => {
+                                let inventoryRouteTemp = JSON.parse(data.data.products)
+                                //console.log(inventorySale)
+                                for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                                  for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                    if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                      inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                      //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                    }
+                                  }
+                                }
+                                inventoryRoute = inventoryRouteTemp
+                                //console.log(inventoryRoute)
+                                inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                                  var hileraInventoryinitial = document.createElement("tr");
+                                  for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                    var celdaInventoryinitial = document.createElement("td");
+                                    switch (indexProducts) {
+                                      case 0:
+                                        var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                        break;
+                                      case 1:
+                                        //var textoCelda = document.createTextNode(elementInventory.count);
+                                        var textoCelda = document.createElement("input");
+                                        Object.assign(textoCelda, {
+                                          className: 'col-md-12 form-control',
+
+                                        })
+                                        textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                        textoCelda.value = elementInventory.count;
+                                        textoCelda.disabled = true;
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                    celdaInventoryinitial.appendChild(textoCelda);
+                                    hileraInventoryinitial.appendChild(celdaInventoryinitial);
+                                  }
+                                  tbodyinventaryinitial.appendChild(hileraInventoryinitial);
+                                  loaderInventoryInitial.style.display = 'none';
+
+                                });
+                              }, 2000);
+
+                            })
+                        } else {
+                          loaderInventoryInitial.style.display = 'none';
+                        }
+                        popupSummary.style.display = 'block';
+                        closeSummary.addEventListener('click', () => {
+                          popupSummary.style.display = 'none';
+                        });
+                        popupSummary.addEventListener('click', e => {
+                          // console.log(e);
+                          if (e.target.className === 'popup-wrapper-summary') {
+                            popupSummary.style.display = 'none';
+                          }
+                        });
+                      }
+                    })
+
+                    var textoCeldaDelete = document.createElement('button')
+                    textoCeldaDelete.innerHTML = "Eliminar";
+                    Object.assign(textoCeldaDelete, {
+                      className: 'ml-1 btn btn-danger',
+                      onclick: function () {
+                        var answerDelete = window.confirm("Quieres eliminar esta la ruta?");
+                        if (answerDelete) {
+                          var answerDeleteConfirm = window.confirm("Esta eliminacioón es permanente. Quiere continuar?");
+                          if (answerDeleteConfirm) {
+                            fetch('http://3.93.67.74:3002/api/route/delete', {
+                              method: 'DELETE',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ id: element.id })
+                            })
+                              .then(response => response.json())
+                              .then(data => {
+                                if (data.data == 1) {
+                                  window.location.href = '../routes/list.html';
+                                } else {
+                                  alert("No fue posible eliminar esta ruta")
+                                }
+                              }).catch(e => console.log(e))
+                          }
+                        }
+                      }
+                    })
+                    break;
+                  case 1:
+                    var textoCelda = document.createTextNode(element.id);
+                    break;
+                  case 2:
+                    var textoCelda = document.createElement('button')
+                    textoCelda.innerHTML = "Ver clientes";
+                    Object.assign(textoCelda, {
+                      className: 'btn btn-primary',
+                      onclick: function () {
+                        fetch('http://3.93.67.74:3002/api/customerList/read', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.idCustomers
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            if (data.data) {
+                              var textInfo = document.getElementById("textInfo");
+                              textInfo.textContent = ""
+                              tbodyclient = document.getElementById("tbodyclient");
+                              while (tbodyclient.lastElementChild) {
+                                tbodyclient.removeChild(tbodyclient.lastElementChild);
+                              }
+                              if (element.idCustomers == "" || JSON.parse(element.idCustomers).length == 0) {
+                                var textInfo = document.getElementById("textInfo");
+                                textInfo.textContent = "No hay clientes asignados"
+                                popupClient.style.display = 'block';
+                                closeClient.addEventListener('click', () => {
+                                  popupClient.style.display = 'none';
+                                });
+                                popupClient.addEventListener('click', e => {
+                                  // console.log(e);
+                                  if (e.target.className === 'popup-wrapper-client') {
+                                    popupClient.style.display = 'none';
+                                  }
+                                });
+                              } else {
+                                JSON.parse(data.data.customers).forEach(elementProducts => {
+                                  var hileraClient = document.createElement("tr");
+                                  for (var j = 0; j < 3; j++) {
+                                    var celdaClient = document.createElement("td");
+                                    switch (j) {
+                                      case 0:
+                                        var textoCeldaClient = document.createTextNode(getNameClient(elementProducts.id));
+                                        break;
+                                      case 1:
+                                        var textoCeldaClient = document.createTextNode(getAddressClient(elementProducts.id));
+                                        break;
+                                      case 2:
+                                        var textoCeldaClient = document.createTextNode(getDueClient(elementProducts.id));
+                                        break;
+                                    }
+                                    celdaClient.appendChild(textoCeldaClient);
+                                    hileraClient.appendChild(celdaClient);
+                                  }
+                                  tbodyclient.appendChild(hileraClient);
+                                });
+                                popupClient.style.display = 'block';
+                                closeClient.addEventListener('click', () => {
+                                  popupClient.style.display = 'none';
+                                });
+                                popupClient.addEventListener('click', e => {
+                                  // console.log(e);
+                                  if (e.target.className === 'popup-wrapper-client') {
+                                    popupClient.style.display = 'none';
+                                  }
+                                });
+                              }
+                            }
+
+
+                          });
+                      }
+                    })
+                    break;
+                  case 3:
+                    var textoCelda = document.createElement('button')
+                    textoCelda.innerHTML = "Ver inventario";
+                    Object.assign(textoCelda, {
+                      className: 'btn btn-primary',
+                      onclick: function () {
+                        fetch('http://3.93.67.74:3002/api/inventory/read', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.inventory
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            if (data.data) {
+                              tbodyproduct = document.getElementById("tbodyproduct");
+                              while (tbodyproduct.lastElementChild) {
+                                tbodyproduct.removeChild(tbodyproduct.lastElementChild);
+                              }
+                              JSON.parse(data.data.products).forEach(elementProducts => {
+                                var hileraProduct = document.createElement("tr");
+                                for (var j = 0; j < 3; j++) {
+                                  var celdaProduct = document.createElement("td");
+                                  switch (j) {
+                                    case 0:
+                                      var textoCeldaProduct = document.createTextNode(elementProducts.id);
+                                      break;
+                                    case 1:
+                                      var textoCeldaProduct = document.createTextNode(elementProducts.count);
+                                      break;
+                                    case 2:
+                                      var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                      break;
+                                  }
+                                  celdaProduct.appendChild(textoCeldaProduct);
+                                  hileraProduct.appendChild(celdaProduct);
+                                }
+                                tbodyproduct.appendChild(hileraProduct);
+                              });
+                              popup.style.display = 'block';
+                              close.addEventListener('click', () => {
+                                popup.style.display = 'none';
+                              });
+                              popup.addEventListener('click', e => {
+                                // console.log(e);
+                                if (e.target.className === 'popup-wrapper') {
+                                  popup.style.display = 'none';
+                                }
+                              });
+                            }
+
+
+                          });
+
+
+                      }
+                    })
+                    break;
+                  case 4:
+                    var textoCelda = document.createTextNode(getNameUser(element.idUser));
+                    break;
+                  case 5:
+                    var textoCelda = document.createTextNode(getDayName(element.date));
+                    break;
+                  case 6:
+                    var textoCelda = document.createTextNode(getStatus(element.state));
+                    break;
+                  case 7:
+                    var textoCelda = document.createTextNode(getDuplicate(element.duplicate));
+                    break;
+
+                  default:
+                    break;
+                }
+                celda.appendChild(textoCelda);
+                if (j == 0) {
+                  if (textoCelda2) celda.appendChild(textoCelda2);
+                  if (textoCeldaDelete) celda.appendChild(textoCeldaDelete);
+                }
+
+                hilera.appendChild(celda);
+              }
+              tblBody.appendChild(hilera);
+            });
+            document.getElementById('dateInitial').value = "";
+            document.getElementById('dateFinal').value = "";
+          });
+      }
+
+    });
+
+    $('a[id=btnClear]').click(function () {
+      const button = document.querySelector('button');
+      const popup = document.querySelector('.popup-wrapper');
+      const close = document.querySelector('.popup-close');
+      const popupSale = document.querySelector('.popup-wrapper-sale');
+      const closeSale = document.querySelector('.popup-close-sale');
+      const popupSummary = document.querySelector('.popup-wrapper-summary');
+      const closeSummary = document.querySelector('.popup-close-summary');
+      const popupClient = document.querySelector('.popup-wrapper-client');
+      const closeClient = document.querySelector('.popup-close-client');
+      const loaderSale = document.querySelector('.loader-sale')
+      const loaderExpense = document.querySelector('.loader-expense')
+      const loaderSummary = document.querySelector('.loader-summary')
+      const loaderInventory = document.querySelector('.loader-inventory')
+
+      var inventoryRoute = [];
+      var inventorySale = [];
+      fetch('http://3.93.67.74:3002/api/route/all', {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          var tblBody = document.getElementById("tbody");
+
+          while (tblBody.lastElementChild) {
+            tblBody.removeChild(tblBody.lastElementChild);
+          }
+          data.data.forEach(element => {
+            //console.log(element)
+            var hilera = document.createElement("tr");
+            for (var j = 0; j < 8; j++) {
+              var celda = document.createElement("td");
+              switch (j) {
+                case 0:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Editar";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      localStorage.setItem("itemEdit", element.id)
+                      window.location.href = '../routes/update.html';
+                    }
+                  })
+                  var textoCelda2 = document.createElement('button')
+                  textoCelda2.innerHTML = "Ver reporte";
+                  Object.assign(textoCelda2, {
+                    className: 'ml-1 btn btn-primary',
+                    onclick: function () {
+                      //loader.style.display = 'block';
+                      tbodysummary = document.getElementById("tbodysummary");
+                      tbodysummaryproducts = document.getElementById("tbodysummaryproducts");
+                      tbodysummaryextraexpense = document.getElementById("tbodysummaryextraexpense");
+                      tbodyinventary = document.getElementById("tbodyinventary");
+                      tbodyinventaryinitial = document.getElementById("tbodyinventaryinitial");
+                      while (tbodysummary.lastElementChild) {
+                        tbodysummary.removeChild(tbodysummary.lastElementChild);
+                      }
+                      while (tbodysummaryproducts.lastElementChild) {
+                        tbodysummaryproducts.removeChild(tbodysummaryproducts.lastElementChild);
+                      }
+                      while (tbodysummaryextraexpense.lastElementChild) {
+                        tbodysummaryextraexpense.removeChild(tbodysummaryextraexpense.lastElementChild);
+                      }
+                      while (tbodyinventary.lastElementChild) {
+                        tbodyinventary.removeChild(tbodyinventary.lastElementChild);
+                      }
+                      while (tbodyinventaryinitial.lastElementChild) {
+                        tbodyinventaryinitial.removeChild(tbodyinventaryinitial.lastElementChild);
+                      }
+                      loaderSale.style.display = 'block';
+                      loaderSummary.style.display = 'block';
+                      fetch('http://3.93.67.74:3002/api/route/getInfoRoute', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.id
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+
+
+                          data.data.data.forEach(elementProducts => {
+                            var hileraProduct = document.createElement("tr");
+                            for (let indexProducts = 0; indexProducts < 4; indexProducts++) {
+                              var celdaProduct = document.createElement("td");
+                              switch (indexProducts) {
+                                case 0:
+                                  var textoCelda = document.createTextNode(elementProducts.customer.id);
+
+                                  break;
+                                case 1:
+                                  var textoCelda = document.createTextNode(elementProducts.customer.title);
+
+                                  break;
+                                case 2:
+                                  var textoCelda = document.createTextNode(elementProducts.depositSale);
+
+                                  break;
+                                case 3:
+                                  // var textoCelda = document.createTextNode(elementProducts.products);
+                                  var textoCelda = document.createElement('button')
+                                  inventorySale = elementProducts.products;
+                                  textoCelda.innerHTML = "Ver productos";
+                                  Object.assign(textoCelda, {
+                                    className: 'btn btn-primary',
+                                    onclick: function () {
+
+                                      tbodyproductsale = document.getElementById("tbodyproductsale");
+                                      while (tbodyproductsale.lastElementChild) {
+                                        tbodyproductsale.removeChild(tbodyproductsale.lastElementChild);
+                                      }
+
+
+                                      elementProducts.products.forEach(elementProducts => {
+                                        var hileraProduct = document.createElement("tr");
+                                        for (var j = 0; j < 4; j++) {
+                                          var celdaProduct = document.createElement("td");
+                                          switch (j) {
+                                            case 0:
+                                              var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                              break;
+                                            case 1:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.quantity);
+                                              break;
+                                            case 2:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.price);
+                                              break;
+                                            case 3:
+                                              var textoCeldaProduct = document.createTextNode(elementProducts.total);
+                                              break;
+                                          }
+                                          celdaProduct.appendChild(textoCeldaProduct);
+                                          hileraProduct.appendChild(celdaProduct);
+                                        }
+                                        tbodyproductsale.appendChild(hileraProduct);
+                                      });
+                                      popupSale.style.display = 'block';
+                                      closeSale.addEventListener('click', () => {
+                                        popupSale.style.display = 'none';
+                                      });
+                                      popupSale.addEventListener('click', e => {
+                                        // console.log(e);
+                                        if (e.target.className === 'popup-wrapper-sale') {
+                                          popupSale.style.display = 'none';
+                                        }
+                                      });
+
+
+
+                                    }
+                                  })
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaProduct.appendChild(textoCelda);
+                              hileraProduct.appendChild(celdaProduct);
+                            }
+                            tbodysummaryproducts.appendChild(hileraProduct);
+
+                          });
+
+
+                          for (let i = 0; i < 7; i++) {
+                            var hileraSummary = document.createElement("tr");
+
+                            for (let j = 0; j < 2; j++) {
+                              var celdaSummary = document.createElement("td");
+                              switch (j) {
+                                case 0:
+                                  switch (i) {
+                                    // case 0:
+                                    //   var textoCeldaSummary = document.createTextNode("Abono");
+                                    //   break;
+                                    case 0:
+                                      var textoCeldaSummary = document.createTextNode("Deposito");
+                                      break;
+                                    case 1:
+                                      var textoCeldaSummary = document.createTextNode("Gastos extra");
+                                      break;
+                                    case 2:
+                                      var textoCeldaSummary = document.createTextNode("Total de ventas");
+                                      break;
+                                    case 3:
+                                      var textoCeldaSummary = document.createTextNode("Porcentaje de ganancia");
+                                      break;
+                                    case 4:
+                                      var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Sin gastos extra)");
+                                      break;
+                                    case 5:
+                                      var textoCeldaSummary = document.createTextNode("Ganancia de ruta (Con gastos extra)");
+                                      break;
+                                    case 6:
+                                      var textoCeldaSummary = document.createTextNode("Deuda al vendedor");
+                                      break;
+
+                                    default:
+                                      break;
+                                  }
+                                  break;
+                                case 1:
+                                  switch (i) {
+                                    // case 0:
+                                    //   var textoCeldaSummary = document.createTextNode(data.data.abono);
+
+                                    //   break;
+                                    case 0:
+                                      var textoCeldaSummary = document.createTextNode(data.data.deposit);
+
+                                      break;
+                                    case 1:
+                                      var textoCeldaSummary = document.createTextNode(data.data.extraExpense);
+
+                                      break;
+                                    case 2:
+                                      var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct);
+
+                                      break;
+                                    case 3:
+                                      var textoCeldaSummary = document.createTextNode(data.data.routeInfo.percentaje);
+                                      break;
+                                    case 4:
+                                      var textoCeldaSummary = document.createTextNode(data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)));
+
+                                      break;
+                                    case 5:
+                                      var textoCeldaSummary = document.createTextNode((data.data.totalValueProduct - (data.data.deposit * (data.data.routeInfo.percentaje / 100)) - data.data.extraExpense));
+
+                                      break;
+                                    case 6:
+                                      var textoCeldaSummary = document.createTextNode(data.data.deposit * (data.data.routeInfo.percentaje / 100));
+                                      break;
+
+                                    default:
+                                      break;
+                                  }
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaSummary.appendChild(textoCeldaSummary);
+                              // celdaSummary.appendChild(btnAction);
+                              hileraSummary.appendChild(celdaSummary);
+                            }
+                            tbodysummary.appendChild(hileraSummary);
+
+
+                          }
+                          loaderSale.style.display = 'none';
+                          loaderSummary.style.display = 'none';
+
+                          if (element.state == 2) {
+                            //$("#actionSummary").removeChild($("#actionSummary").lastElementChild);
+                            var div = document.getElementById("actionSummaryContent")
+                            //console.log(div.hasChildNodes())
+                            if (div !== null) {
+                              //console.log("Hi")
+                              while (div.hasChildNodes()) {
+                                div.removeChild(div.lastChild);
+                              }
+                            }
+                            var divBody = document.createElement('div')
+                            divBody.setAttribute("id", "actionSummary");
+                            div.appendChild(divBody);
+                            var buttonCancelRoute = document.createElement('button')
+                            buttonCancelRoute.innerHTML = "Cancelar";
+                            Object.assign(buttonCancelRoute, {
+                              className: 'btn btn-secondary ml-5',
+                              onclick: function () {
+                                popupSummary.style.display = 'none';
+                              }
+                            })
+                            $("#actionSummary").first().after(buttonCancelRoute);
+                            // $("#actionSummary").appendChild(buttonCancelRoute);
+
+
+                            var buttonEndRoute = document.createElement('button')
+                            buttonEndRoute.innerHTML = "Terminar ruta";
+                            Object.assign(buttonEndRoute, {
+                              className: 'btn btn-primary mr-5',
+                              onclick: function () {
+                                let inventoryFinal = inventoryRoute;
+                                inventoryRoute.forEach((elementInventoryRoute, index) => {
+                                  inventoryFinal[index].count = document.getElementById("cant" + index).value;
+                                })
+                                //console.log(inventoryFinal)
+
+                                var answer = window.confirm("Quieres finalizar la ruta?");
+                                if (answer) {
+
+                                  fetch('http://3.93.67.74:3002/api/inventory/update', {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                      id: element.inventory,
+                                      products: JSON.stringify(inventoryFinal)
+                                    })
+                                  })
+                                    .then(response => response.json())
+                                    .then(dataInventory => {
+                                      //console.log(data)
+                                      if (dataInventory.code === 200 && dataInventory.message === "Updated successfully" && dataInventory.data) {
+                                        fetch('http://3.93.67.74:3002/api/user/addProfit', {
+                                          method: 'POST',
+                                          headers: { 'Content-Type': 'application/json' },
+                                          body: JSON.stringify({
+                                            id: element.idUser,
+                                            profit: data.data.deposit * (data.data.routeInfo.percentaje / 100)
+                                          })
+                                        }).then(response => response.json())
+                                          .then(dataUser => {
+                                            if (dataUser.code === 200 && dataUser.message === "Request successful" && dataUser.data) {
+                                              fetch('http://3.93.67.74:3002/api/route/update', {
+                                                method: 'PUT',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({
+                                                  id: element.id,
+                                                  // idCustomers: idCustomers,
+                                                  // inventory: inventory,
+                                                  // idUser: idUserFromSelect,
+                                                  // date: date,
+                                                  state: 3,
+                                                  //percentaje: percentaje
+                                                })
+                                              })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                  //console.log(data)
+                                                  if (data.code === 200 && data.message === "Updated successfully") {
+                                                    $(location).attr('href', './list.html')
+                                                    popupSummary.style.display = 'none';
+                                                  }
+                                                });
+
+
+                                              popupSummary.style.display = 'none';
+                                            }
+                                          })
+
+                                      }
+                                    });
+
+
+                                }
+                                else {
+                                  //console.log("No")
+                                }
+
+
+                              }
+                            })
+
+                            $("#actionSummary").first().after(buttonEndRoute);
+                            // $("#actionSummary").appendChild(buttonEndRoute);
+
+
+
+                          }
+
+                        }).catch(e => {
+                          console.log(e)
+                        })
+                      loaderExpense.style.display = 'block';
+
+                      fetch('http://3.93.67.74:3002/api/extraexpense/all', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          idRoute: element.id
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data.length == 0) loaderExpense.style.display = 'none';
+
+                          data.data.forEach(elementExtraExpense => {
+                            var hileraProduct = document.createElement("tr");
+                            for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                              var celdaProduct = document.createElement("td");
+                              switch (indexProducts) {
+                                case 0:
+                                  var textoCelda = document.createTextNode(elementExtraExpense.description);
+
+                                  break;
+                                case 1:
+                                  var textoCelda = document.createTextNode(elementExtraExpense.price);
+
+                                  break;
+                                default:
+                                  break;
+                              }
+                              celdaProduct.appendChild(textoCelda);
+                              hileraProduct.appendChild(celdaProduct);
+                            }
+                            tbodysummaryextraexpense.appendChild(hileraProduct);
+                            loaderExpense.style.display = 'none';
+
+                          });
+                        })
+                      loaderInventory.style.display = 'block';
+
+                      fetch('http://3.93.67.74:3002/api/inventory/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.inventory
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          setTimeout(() => {
+                            let inventoryRouteTemp = JSON.parse(data.data.products)
+                            //console.log(inventorySale)
+                            for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                              for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                  inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                  //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                }
+                              }
+                            }
+                            inventoryRoute = inventoryRouteTemp
+                            //console.log(inventoryRoute)
+                            inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                              var hileraInventory = document.createElement("tr");
+                              for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                var celdaInventory = document.createElement("td");
+                                switch (indexProducts) {
+                                  case 0:
+                                    var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                    break;
+                                  case 1:
+                                    //var textoCelda = document.createTextNode(elementInventory.count);
+                                    var textoCelda = document.createElement("input");
+                                    Object.assign(textoCelda, {
+                                      className: 'col-md-12 form-control',
+
+                                    })
+                                    textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                    textoCelda.value = elementInventory.count;
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                celdaInventory.appendChild(textoCelda);
+                                hileraInventory.appendChild(celdaInventory);
+                              }
+                              tbodyinventary.appendChild(hileraInventory);
+                              loaderInventory.style.display = 'none';
+
+                            });
+                          }, 2000);
+
+                        })
+                      loaderInventoryInitial.style.display = 'block';
+                      if (element.inventoryInitial != "0") {
+                        fetch('http://3.93.67.74:3002/api/inventoryInitial/read', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            id: element.inventoryInitial
+                          })
+                        }).then(response => response.json())
+                          .then(data => {
+                            setTimeout(() => {
+                              let inventoryRouteTemp = JSON.parse(data.data.products)
+                              //console.log(inventorySale)
+                              for (let indexInventoryRoute = 0; indexInventoryRoute < inventoryRouteTemp.length; indexInventoryRoute++) {
+                                for (let indexInventorySale = 0; indexInventorySale < inventorySale.length; indexInventorySale++) {
+                                  if (inventoryRouteTemp[indexInventoryRoute].id == inventorySale[indexInventorySale].id) {
+                                    inventoryRouteTemp[indexInventoryRoute].count = inventoryRouteTemp[indexInventoryRoute].count - inventorySale[indexInventorySale].quantity;
+                                    //console.log(inventoryRouteTemp[indexInventoryRoute].count)
+                                  }
+                                }
+                              }
+                              inventoryRoute = inventoryRouteTemp
+                              //console.log(inventoryRoute)
+                              inventoryRoute.forEach((elementInventory, indexInvetory) => {
+                                var hileraInventoryinitial = document.createElement("tr");
+                                for (let indexProducts = 0; indexProducts < 2; indexProducts++) {
+                                  var celdaInventoryinitial = document.createElement("td");
+                                  switch (indexProducts) {
+                                    case 0:
+                                      var textoCelda = document.createTextNode(getNameProduct(elementInventory.id));
+
+                                      break;
+                                    case 1:
+                                      //var textoCelda = document.createTextNode(elementInventory.count);
+                                      var textoCelda = document.createElement("input");
+                                      Object.assign(textoCelda, {
+                                        className: 'col-md-12 form-control',
+
+                                      })
+                                      textoCelda.setAttribute("id", "cant" + indexInvetory)
+                                      textoCelda.value = elementInventory.count;
+                                      textoCelda.disabled = true;
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                  celdaInventoryinitial.appendChild(textoCelda);
+                                  hileraInventoryinitial.appendChild(celdaInventoryinitial);
+                                }
+                                tbodyinventaryinitial.appendChild(hileraInventoryinitial);
+                                loaderInventoryInitial.style.display = 'none';
+
+                              });
+                            }, 2000);
+
+                          })
+                      } else {
+                        loaderInventoryInitial.style.display = 'none';
+                      }
+                      popupSummary.style.display = 'block';
+                      closeSummary.addEventListener('click', () => {
+                        popupSummary.style.display = 'none';
+                      });
+                      popupSummary.addEventListener('click', e => {
+                        // console.log(e);
+                        if (e.target.className === 'popup-wrapper-summary') {
+                          popupSummary.style.display = 'none';
+                        }
+                      });
+                    }
+                  })
+
+                  var textoCeldaDelete = document.createElement('button')
+                  textoCeldaDelete.innerHTML = "Eliminar";
+                  Object.assign(textoCeldaDelete, {
+                    className: 'ml-1 btn btn-danger',
+                    onclick: function () {
+                      var answerDelete = window.confirm("Quieres eliminar esta la ruta?");
+                      if (answerDelete) {
+                        var answerDeleteConfirm = window.confirm("Esta eliminacioón es permanente. Quiere continuar?");
+                        if (answerDeleteConfirm) {
+                          fetch('http://3.93.67.74:3002/api/route/delete', {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: element.id })
+                          })
+                            .then(response => response.json())
+                            .then(data => {
+                              if (data.data == 1) {
+                                window.location.href = '../routes/list.html';
+                              } else {
+                                alert("No fue posible eliminar esta ruta")
+                              }
+                            }).catch(e => console.log(e))
+                        }
+                      }
+                    }
+                  })
+                  break;
+                case 1:
+                  var textoCelda = document.createTextNode(element.id);
+                  break;
+                case 2:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Ver clientes";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      fetch('http://3.93.67.74:3002/api/customerList/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.idCustomers
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data) {
+                            var textInfo = document.getElementById("textInfo");
+                            textInfo.textContent = ""
+                            tbodyclient = document.getElementById("tbodyclient");
+                            while (tbodyclient.lastElementChild) {
+                              tbodyclient.removeChild(tbodyclient.lastElementChild);
+                            }
+                            if (element.idCustomers == "" || JSON.parse(element.idCustomers).length == 0) {
+                              var textInfo = document.getElementById("textInfo");
+                              textInfo.textContent = "No hay clientes asignados"
+                              popupClient.style.display = 'block';
+                              closeClient.addEventListener('click', () => {
+                                popupClient.style.display = 'none';
+                              });
+                              popupClient.addEventListener('click', e => {
+                                // console.log(e);
+                                if (e.target.className === 'popup-wrapper-client') {
+                                  popupClient.style.display = 'none';
+                                }
+                              });
+                            } else {
+                              JSON.parse(data.data.customers).forEach(elementProducts => {
+                                var hileraClient = document.createElement("tr");
+                                for (var j = 0; j < 3; j++) {
+                                  var celdaClient = document.createElement("td");
+                                  switch (j) {
+                                    case 0:
+                                      var textoCeldaClient = document.createTextNode(getNameClient(elementProducts.id));
+                                      break;
+                                    case 1:
+                                      var textoCeldaClient = document.createTextNode(getAddressClient(elementProducts.id));
+                                      break;
+                                    case 2:
+                                      var textoCeldaClient = document.createTextNode(getDueClient(elementProducts.id));
+                                      break;
+                                  }
+                                  celdaClient.appendChild(textoCeldaClient);
+                                  hileraClient.appendChild(celdaClient);
+                                }
+                                tbodyclient.appendChild(hileraClient);
+                              });
+                              popupClient.style.display = 'block';
+                              closeClient.addEventListener('click', () => {
+                                popupClient.style.display = 'none';
+                              });
+                              popupClient.addEventListener('click', e => {
+                                // console.log(e);
+                                if (e.target.className === 'popup-wrapper-client') {
+                                  popupClient.style.display = 'none';
+                                }
+                              });
+                            }
+                          }
+
+
+                        });
+                    }
+                  })
+                  break;
+                case 3:
+                  var textoCelda = document.createElement('button')
+                  textoCelda.innerHTML = "Ver inventario";
+                  Object.assign(textoCelda, {
+                    className: 'btn btn-primary',
+                    onclick: function () {
+                      fetch('http://3.93.67.74:3002/api/inventory/read', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          id: element.inventory
+                        })
+                      }).then(response => response.json())
+                        .then(data => {
+                          if (data.data) {
+                            tbodyproduct = document.getElementById("tbodyproduct");
+                            while (tbodyproduct.lastElementChild) {
+                              tbodyproduct.removeChild(tbodyproduct.lastElementChild);
+                            }
+                            JSON.parse(data.data.products).forEach(elementProducts => {
+                              var hileraProduct = document.createElement("tr");
+                              for (var j = 0; j < 3; j++) {
+                                var celdaProduct = document.createElement("td");
+                                switch (j) {
+                                  case 0:
+                                    var textoCeldaProduct = document.createTextNode(elementProducts.id);
+                                    break;
+                                  case 1:
+                                    var textoCeldaProduct = document.createTextNode(elementProducts.count);
+                                    break;
+                                  case 2:
+                                    var textoCeldaProduct = document.createTextNode(getNameProduct(elementProducts.id));
+                                    break;
+                                }
+                                celdaProduct.appendChild(textoCeldaProduct);
+                                hileraProduct.appendChild(celdaProduct);
+                              }
+                              tbodyproduct.appendChild(hileraProduct);
+                            });
+                            popup.style.display = 'block';
+                            close.addEventListener('click', () => {
+                              popup.style.display = 'none';
+                            });
+                            popup.addEventListener('click', e => {
+                              // console.log(e);
+                              if (e.target.className === 'popup-wrapper') {
+                                popup.style.display = 'none';
+                              }
+                            });
+                          }
+
+
+                        });
+
+
+                    }
+                  })
+                  break;
+                case 4:
+                  var textoCelda = document.createTextNode(getNameUser(element.idUser));
+                  break;
+                case 5:
+                  var textoCelda = document.createTextNode(getDayName(element.date));
+                  break;
+                case 6:
+                  var textoCelda = document.createTextNode(getStatus(element.state));
+                  break;
+                case 7:
+                  var textoCelda = document.createTextNode(getDuplicate(element.duplicate));
+                  break;
+
+                default:
+                  break;
+              }
+              celda.appendChild(textoCelda);
+              if (j == 0) {
+                if (textoCelda2) celda.appendChild(textoCelda2);
+                if (textoCeldaDelete) celda.appendChild(textoCeldaDelete);
+              }
+
+              hilera.appendChild(celda);
+            }
+            tblBody.appendChild(hilera);
+          });
+          document.getElementById('dateInitial').value = "";
+          document.getElementById('dateFinal').value = "";
+
+        });
+    });
+  </script>
+</body>
+
+</html>

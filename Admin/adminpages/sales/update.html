@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../assets/css/autoComplete.css">
+
+  <style>
+    .popup-wrapper {
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .popup {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .popup a {
+      background: salmon;
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 30px auto;
+      display: block;
+      width: 50%;
+    }
+
+    .popup a:hover {
+      background: palevioletred;
+      transition: all 0.2s;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+
+      </ul>
+
+
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../dashboard.html" class="brand-link">
+        <img src="../../adminpages/assets/logo.png" alt="Admin Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">Comodín</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="../dashboard.html" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Inicio
+
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Ventas
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../sales/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../sales/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../sales/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Clientes
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../customers/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../customers/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../customers/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-route"></i>
+                <p>
+                  Vendedores
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../routes/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../routes/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>
+                  Productos
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../products/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../products/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../products/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>
+                  Gastos extras
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../extraexpenses/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../extraexpenses/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Inventario
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../inventory/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../inventory/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="../inventory/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li> -->
+              </ul>
+            </li>
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-search-location"></i>
+                <p>
+                  Localizaciones
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../locations/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../locations/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../locations/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Empleados
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../users/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../users/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../users/update.html" class="nav-link">
+                    <p>Actualizar</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-bag"></i>
+                <p>
+                  Proveedores
+                  <i class="fas fa-angle-left right"></i>
+
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../suppliers/list.html" class="nav-link">
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../suppliers/create.html" class="nav-link">
+                    <p>Crear</p>
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <!--<li class="nav-item">
+              <a href="../reports/reports.html" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                  Reportes
+
+                </p>
+              </a>
+            </li>-->
+            <!-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                  Reportes
+
+                </p>
+              </a>
+            </li>
+-->
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Actualizar Ventas</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active">Actualizar Ventas</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-3"> </div>
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Actualizar Ventas</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>ID</label>
+                      <input id="id" type="text" class="form-control" placeholder="ID">
+
+                      <a id="btnSearch" class="btn btn-primary btn-block">Consultar</a>
+                    </div>
+                    <div class="form-group">
+                      <label>Referencia de venta</label>
+                      <input id="referenceSale" type="text" class="form-control" placeholder="Referencia de venta">
+                    </div>
+                    <div class="form-group">
+                      <label>Identificación del cliente</label>
+                      <input id="idCustomer" type="text" class="form-control" placeholder="Identificación del cliente">
+                    </div>
+                    <div class="form-group">
+                      <label>Identificador del vendedor (Ruta)</label>
+                      <input id="idRoute" type="text" class="form-control"
+                        placeholder="Identificador del vendedor (Ruta)">
+                    </div>
+                    <div class="form-group">
+                      <label>Identificación del empleado</label>
+                      <input id="idUser" autocomplete="off" type="text" class="form-control"
+                        placeholder="Identificación del empleado">
+                    </div>
+                    <div class="form-group">
+                      <label>Productos</label>
+                      <!-- <input id="products" type="text" class="form-control" placeholder="Productos"> -->
+                      <a id="btnProduct" class="btn btn-primary btn-block">Ver productos</a>
+                      <div style="display: flex;">
+                        <h5>Total: &nbsp;<h5 id=totalProducts>0</h5>
+                        </h5>
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      <label>Deposito</label>
+                      <input id="deposit" type="text" class="form-control" placeholder="Deposito">
+                    </div>
+                    <!-- <div class="form-group">
+                      <label>Estado</label>
+                      <input id="status" type="text" class="form-control" placeholder="Estado">
+                    </div> -->
+                    <div class="form-group">
+                      <label>Fecha</label>
+                      <input id="date" type="text" class="form-control" placeholder="Fecha">
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="popup-wrapper">
+                    <div class="popup">
+                      <div class="popup-close">x</div><br>
+                      <div class="panel-body">
+
+                        <form>
+
+                          <div class="input-group control-group after-add-more">
+                            <!-- <input type="text" autocomplete="off" id=elemt0 name="addmore[index]"
+                              class="col-md-6 form-control" placeholder="ID del producto">
+                            <input type="text" id=cant0 name="addmore[index]" class="col-md-6 form-control"
+                              placeholder="Cantidad">
+                            <div class="input-group-btn">
+                              <button class="btn btn-success add-more" type="button"><i
+                                  class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div> -->
+                          </div>
+
+                        </form>
+
+                        <!-- Copy Fields -->
+                        <div class="copy hide">
+                          <div class="control-group input-group row" style="margin-top:10px">
+                            <!-- <input type="text" autocomplete="off" id=elemt1 name="addmore[index+1]"
+                              class="col-md-6 form-control" placeholder="ID del producto"> -->
+                            <h6 id=elemt class="col-md-6"></h6>
+                            <input type="text" id=cant name="addmore[index+1]" class="col-md-6 form-control"
+                              placeholder="Cantidad" value="0">
+                            <!-- <div class="input-group-btn">
+                              <button class="btn btn-danger remove" type="button"><i
+                                  class="glyphicon glyphicon-remove"></i> Remove</button>
+                            </div> -->
+                          </div>
+                        </div>
+
+                        <a id="save" class="btn btn-primary btn-block">Guardar</a>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <a type="button" class="btn btn-primary btn-block">Actualizar</a>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+            <div class="col-md-3"> </div>
+
+            <!--/.col (left) -->
+            <!-- right column -->
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2021 BCode S.A.S</a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <script src="../assets/js/dist/autoComplete.js"></script>
+
+  <!-- AdminLTE for demo purposes
+  <script src="../../dist/js/demo.js"></script> -->
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+      bsCustomFileInput.init();
+    });
+  </script>
+  <script>
+    let productTotalValue = 0
+    let idUserFromSelect = null;
+    let idCustomerFromSelect = null;
+    let products = [];
+    let index = 0;
+    const popup = document.querySelector('.popup-wrapper');
+    const close = document.querySelector('.popup-close');
+
+    if (localStorage.getItem("itemSaleEdit") !== null) {
+      //console.log("holaa")
+      //console.log(localStorage.getItem("itemEdit"))
+      var id = localStorage.getItem("itemSaleEdit");
+      fetch('http://3.93.67.74:3002/api/sale/read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: id
+        })
+      })
+        .then(response => response.json())
+        .then(async data => {
+
+          index = 2;
+          //console.log(data)
+          document.getElementById('id').value = data.data.id;
+          document.getElementById('referenceSale').value = data.data.referenceSale;
+          document.getElementById('idCustomer').value = await getElementFromCustomerData(data.data.idCustomer);
+          document.getElementById('idRoute').value = data.data.idRoute;
+          //document.getElementById('idUser').value = data.data.idUser;
+          document.getElementById('idUser').value = await getElementFromUserData(data.data.idUser);
+          //document.getElementById('products').value = data.data.products;
+          idUserFromSelect = data.data.idUser
+          idCustomerFromSelect = data.data.idCustomer
+          products = JSON.parse(data.data.products);
+
+          document.getElementById('deposit').value = data.data.deposit;
+          //document.getElementById('status').value = data.data.status;
+          document.getElementById('date').value = data.data.date;
+
+          for (let indexFor = 0; indexFor < (await productsData).length; indexFor++) {
+            for (let indexData = 0; indexData < products.length; indexData++) {
+              if ((await productsData)[indexFor].id == products[indexData].id) {
+                document.getElementById("cant" + indexFor).value = products[indexData].cantidad;
+              }
+
+            }
+
+          }
+          localStorage.setItem("itemEdit", null)
+
+        });
+    }
+
+    $('a[id=btnProduct]').click(function () {
+      const button = document.querySelector('button');
+
+
+      popup.style.display = 'block';
+      close.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+      popup.addEventListener('click', e => {
+        // console.log(e);
+        if (e.target.className === 'popup-wrapper') {
+          popup.style.display = 'none';
+        }
+      });
+
+      popup.style.display = 'block';
+      close.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+      popup.addEventListener('click', e => {
+        // console.log(e);
+        if (e.target.className === 'popup-wrapper') {
+          popup.style.display = 'none';
+        }
+      });
+    });
+
+    $('a[type=button]').click(function () {
+      var id = document.getElementById('id').value;
+      var referenceSale = document.getElementById('referenceSale').value;
+      var idCustomer = document.getElementById('idCustomer').value;
+      var idRoute = document.getElementById('idRoute').value;
+      var idUser = document.getElementById('idUser').value;
+      //var products = document.getElementById('products').value;
+      var deposit = document.getElementById('deposit').value;
+      //var status = document.getElementById('status').value;
+      var date = document.getElementById('date').value;
+      //console.log(idUserFromSelect)
+      fetch('http://3.93.67.74:3002/api/sale/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: id,
+          referenceSale: referenceSale,
+          idCustomer: idCustomerFromSelect,
+          idRoute: idRoute,
+          idUser: idUserFromSelect,
+          products: JSON.stringify(products),
+          deposit: deposit,
+          //status: status,
+          date: date
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data)
+          if (data.code === 200 && data.message === "Updated successfully") {
+            $(location).attr('href', './list.html')
+          }
+        });
+    })
+
+
+    $(document).ready(async function () {
+      let add = true;
+
+      let productsData = [];
+      async function getData() {
+        try {
+          const source = await fetch(`http://3.93.67.74:3002/api/product`);
+          const sourceData = await source.json();
+          return await getNameWithId(sourceData.data)
+
+        } catch (error) {
+          return error;
+        }
+
+      }
+      productsData = getData();
+      //console.log(productsData)
+
+      async function getNameWithId(dataList) {
+        let list = []
+
+        for (let index = 0; index < dataList.length; index++) {
+          list[index] = {
+            name: dataList[index].name,
+            id: dataList[index].id,
+            price: dataList[index].price
+          }
+        }
+        return list
+      }
+      (await productsData).forEach((productsDataListItem, indexProductsDataList) => {
+        var html = $(".copy").html();
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        doc.getElementById("elemt").textContent = productsDataListItem.name;
+        doc.getElementById("elemt").setAttribute("id", "elemt" + index);
+        doc.getElementById("cant").setAttribute("id", "cant" + index);
+
+        $(".after-add-more").first().after(doc.documentElement.innerHTML);
+        index = index + 1;
+      })
+
+
+      async function getIdWithName(nameItem) {
+        const usersDataList = await productsData
+        for (let index = 0; index < usersDataList.length; index++) {
+          if (usersDataList[index].name == nameItem) {
+            return usersDataList[index].id
+          }
+        }
+        return null
+      }
+
+      async function getNameProductWithId(idItem) {
+        const usersDataList = await productsData
+        for (let index = 0; index < usersDataList.length; index++) {
+          if (usersDataList[index].id == idItem) {
+            return usersDataList[index].name
+          }
+        }
+        return null
+      }
+
+
+      $('a[id=btnSearch]').click(function () {
+        var id = document.getElementById('id').value;
+        fetch('http://3.93.67.74:3002/api/sale/read', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+          .then(response => response.json())
+          .then(async data => {
+
+            // for (let indexFor = 2; indexFor < products.length; indexFor++) {
+            //   document.querySelector("input[id='" + indexFor + "']").closest(".control-group").remove()
+            // }
+
+
+
+            index = 2;
+            //console.log(data)
+            document.getElementById('id').value = data.data.id;
+            document.getElementById('referenceSale').value = data.data.referenceSale;
+            document.getElementById('idCustomer').value = await getElementFromCustomerData(data.data.idCustomer);
+            document.getElementById('idRoute').value = data.data.idRoute;
+            //document.getElementById('idUser').value = data.data.idUser;
+            document.getElementById('idUser').value = await getElementFromUserData(data.data.idUser);
+            //document.getElementById('products').value = data.data.products;
+            idUserFromSelect = data.data.idUser
+            idCustomerFromSelect = data.data.idCustomer
+            products = JSON.parse(data.data.products);
+
+            document.getElementById('deposit').value = data.data.deposit;
+            //document.getElementById('status').value = data.data.status;
+            document.getElementById('date').value = data.data.date;
+
+            for (let indexFor = 0; indexFor < (await productsData).length; indexFor++) {
+              for (let indexData = 0; indexData < products.length; indexData++) {
+                if ((await productsData)[indexFor].id == products[indexData].id) {
+                  document.getElementById("cant" + indexFor).value = products[indexData].cantidad;
+                }
+
+              }
+
+            }
+
+            // for (let indexFor = 0; indexFor < products.length; indexFor++) {
+
+            //   if (indexFor >= 2) {
+
+            //     var html = $(".copy").html();
+            //     var doc = new DOMParser().parseFromString(html, "text/html");
+            //     doc.getElementById("elemt1").setAttribute("id", "elemt" + indexFor);
+            //     doc.getElementById("cant1").setAttribute("id", "cant" + indexFor);
+            //     $(".after-add-more").first().after(doc.documentElement.innerHTML);
+            //     document.getElementById("elemt" + indexFor).value = await getNameProductWithId(products[indexFor].id);
+            //     document.getElementById("cant" + indexFor).value = products[indexFor].cantidad;
+            //     window['autocomplete' + (indexFor)] = new autoComplete({
+            //       selector: "#elemt" + indexFor,
+            //       placeHolder: "Producto",
+            //       data: {
+            //         src: productsData,
+            //         keys: ["name"],
+            //       },
+            //       resultsList: {
+            //         element: (list, data) => {
+            //           if (!data.results.length) {
+            //             const message = document.createElement("div");
+            //             message.setAttribute("class", "no_result");
+            //             message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            //             list.prepend(message);
+            //           }
+            //         },
+            //         noResults: true,
+            //       },
+            //       resultItem: {
+            //         highlight: {
+            //           render: true
+            //         }
+            //       },
+            //       events: {
+            //         input: {
+            //           selection: (event) => {
+            //             const selection = event.detail.selection.value;
+            //             window['autocomplete' + (indexFor)].input.value = selection.name;
+            //           }
+            //         }
+            //       }
+            //     });
+            //     index = indexFor;
+
+            //   } else {
+            //     document.getElementById("elemt" + indexFor).value = await getNameProductWithId(products[indexFor].id);
+            //     document.getElementById("cant" + indexFor).value = products[indexFor].cantidad;
+            //   }
+
+
+            // }
+          });
+      });
+
+      $('a[id=save]').click(async function () {
+        products = [];
+        indexProducts = 0;
+        productTotalValue = 0;
+        for (let indexFor = 0; indexFor < (await productsData).length; indexFor++) {
+          var indexID = document.getElementById("elemt" + indexFor).textContent;
+          var indexCant = document.getElementById("cant" + indexFor).value;
+
+          if (indexCant != "0") {
+            products[indexProducts] = {
+              id: await getIdWithName(indexID),
+              cantidad: indexCant
+            }
+            productTotalValue = productTotalValue + (parseInt((await productsData)[indexFor].price) * indexCant);
+            document.getElementById("totalProducts").textContent = productTotalValue
+            indexProducts++;
+          }
+          //console.log(products)
+        }
+        popup.style.display = 'none';
+
+
+      })
+
+    });
+
+
+  </script>
+  <script>
+    let usersData = [];
+    // fetch('http://3.93.67.74:3002/api/user/', {
+    //   method: 'GET',
+    //   // headers: { 'Content-Type': 'application/json' },
+    //   // body: JSON.stringify({
+    //   //   title: title,
+    //   //   products: JSON.stringify(products)
+    //   // })
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     usersData = data.data
+    //   });
+    async function getData() {
+      try {
+        const source = await fetch(`http://3.93.67.74:3002/api/user/`);
+        const sourceData = await source.json();
+        return await getNameIdUserWithId(sourceData.data)
+
+      } catch (error) {
+        return error;
+      }
+
+    }
+    usersData = getData();
+    //console.log(usersData)
+
+    async function getNameIdUserWithId(dataList) {
+      let list = []
+
+      for (let index = 0; index < dataList.length; index++) {
+        list[index] = {
+          name: dataList[index].name,
+          id: dataList[index].id,
+          document: dataList[index].document,
+          label: dataList[index].document + " - " + dataList[index].name
+        }
+      }
+      return list
+    }
+
+    async function getElementFromUserData(idUserFromSelect) {
+      const usersDataList = await usersData
+      for (let index = 0; index < usersDataList.length; index++) {
+        if (usersDataList[index].id == idUserFromSelect) {
+          return usersDataList[index].label
+        }
+      }
+      return null
+    }
+    const idUserAutoCompleteJS = new autoComplete({
+      selector: "#idUser",
+      placeHolder: "Empleado",
+      data: {
+        // src: async () => {
+        //   try {
+        //     const source = await fetch(`http://3.93.67.74:3002/api/user/`);
+        //     const data = await source.json();
+        //     console.log(data)
+        //     return data;
+        //   } catch (error) {
+        //     return error;
+        //   }
+        // },
+        // src: [
+        //   { "name": "Sauce - Thousand Island" },
+        //   { "name": "Wild Boar - Tenderloin" },
+        //   { "name": "Goat - Whole Cut" }
+        // ],
+        src: usersData,
+        keys: ["label"],
+
+      },
+      resultsList: {
+        element: (list, data) => {
+          if (!data.results.length) {
+            // Create "No Results" message element
+            const message = document.createElement("div");
+            // Add class to the created element
+            message.setAttribute("class", "no_result");
+            // Add message text content
+            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            // Append message element to the results list
+            list.prepend(message);
+          }
+        },
+        noResults: true,
+      },
+      resultItem: {
+        highlight: {
+          render: true
+        }
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            idUserAutoCompleteJS.input.value = selection.label;
+            idUserFromSelect = selection.id
+            //console.log(idUserFromSelect)
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    let productsData = [];
+
+    async function getDataProducts() {
+      try {
+        const source = await fetch(`http://3.93.67.74:3002/api/product`);
+        const sourceData = await source.json();
+        //console.log(sourceData)
+        return await getNameWithId(sourceData.data)
+
+      } catch (error) {
+        return error;
+      }
+
+    }
+    productsData = getDataProducts();
+    //console.log(productsData)
+
+    async function getNameWithId(dataList) {
+      let list = []
+
+      for (let index = 0; index < dataList.length; index++) {
+        list[index] = {
+          name: dataList[index].name,
+          id: dataList[index].id,
+        }
+      }
+      return list
+    }
+
+    const autoCompleteJS = new autoComplete({
+      selector: "#elemt0",
+      placeHolder: "Producto",
+      data: {
+        src: productsData,
+        keys: ["name"],
+      },
+      resultsList: {
+        element: (list, data) => {
+          if (!data.results.length) {
+            const message = document.createElement("div");
+            message.setAttribute("class", "no_result");
+            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            list.prepend(message);
+          }
+        },
+        noResults: true,
+      },
+      resultItem: {
+        highlight: {
+          render: true
+        }
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            autoCompleteJS.input.value = selection.name;
+          }
+        }
+      }
+    });
+
+    const autoCompleteJS2 = new autoComplete({
+      selector: "#elemt1",
+      placeHolder: "Producto",
+      data: {
+        src: productsData,
+        keys: ["name"],
+      },
+      resultsList: {
+        element: (list, data) => {
+          if (!data.results.length) {
+            const message = document.createElement("div");
+            message.setAttribute("class", "no_result");
+            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            list.prepend(message);
+          }
+        },
+        noResults: true,
+      },
+      resultItem: {
+        highlight: {
+          render: true
+        }
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            autoCompleteJS2.input.value = selection.name;
+          }
+        }
+      }
+    });
+
+  </script>
+  <script>
+    let customerData = [];
+    // fetch('http://3.93.67.74:3002/api/user/', {
+    //   method: 'GET',
+    //   // headers: { 'Content-Type': 'application/json' },
+    //   // body: JSON.stringify({
+    //   //   title: title,
+    //   //   products: JSON.stringify(products)
+    //   // })
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     usersData = data.data
+    //   });
+    async function getDataCustomer() {
+      try {
+        const source = await fetch(`http://3.93.67.74:3002/api/customer/all`, { method: 'POST' });
+        const sourceData = await source.json();
+        return await getNameCustomerDataWithId(sourceData.data)
+
+      } catch (error) {
+        return error;
+      }
+
+    }
+    customerData = getDataCustomer();
+    //console.log(customerData)
+
+    async function getNameCustomerDataWithId(dataList) {
+      let list = []
+
+      for (let index = 0; index < dataList.length; index++) {
+        list[index] = {
+          title: dataList[index].title,
+          id: dataList[index].id,
+          label: dataList[index].id + " - " + dataList[index].title
+        }
+      }
+      return list
+    }
+
+    async function getElementFromCustomerData(idCustomerFromSelect) {
+      const usersDataList = await customerData
+      for (let index = 0; index < usersDataList.length; index++) {
+        if (usersDataList[index].id == idCustomerFromSelect) {
+          return usersDataList[index].label
+        }
+      }
+      return null
+    }
+
+    const idCustomerAutoCompleteJS = new autoComplete({
+      selector: "#idCustomer",
+      placeHolder: "Cliente",
+      data: {
+        // src: async () => {
+        //   try {
+        //     const source = await fetch(`http://3.93.67.74:3002/api/user/`);
+        //     const data = await source.json();
+        //     console.log(data)
+        //     return data;
+        //   } catch (error) {
+        //     return error;
+        //   }
+        // },
+        // src: [
+        //   { "name": "Sauce - Thousand Island" },
+        //   { "name": "Wild Boar - Tenderloin" },
+        //   { "name": "Goat - Whole Cut" }
+        // ],
+        src: customerData,
+        keys: ["label"],
+
+      },
+      resultsList: {
+        element: (list, data) => {
+          if (!data.results.length) {
+            // Create "No Results" message element
+            const message = document.createElement("div");
+            // Add class to the created element
+            message.setAttribute("class", "no_result");
+            // Add message text content
+            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            // Append message element to the results list
+            list.prepend(message);
+          }
+        },
+        noResults: true,
+      },
+      resultItem: {
+        highlight: {
+          render: true
+        }
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            idCustomerAutoCompleteJS.input.value = selection.label;
+            idCustomerFromSelect = selection.id
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
